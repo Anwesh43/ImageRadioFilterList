@@ -1,5 +1,8 @@
 package com.anwesome.ui.imagefilterradiolist;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -77,6 +80,44 @@ public class ImageRadioFilterView extends View{
         }
         public void update(float factor) {
             gap = (w/2)*factor;
+        }
+    }
+    private class AnimationHandler extends AnimatorListenerAdapter implements ValueAnimator.AnimatorUpdateListener {
+        private int dir = 0;
+        private boolean isAnimating = false;
+        private ValueAnimator startAnim = ValueAnimator.ofFloat(0,1),endAnim = ValueAnimator.ofFloat(1,0);
+        public AnimationHandler() {
+            startAnim.setDuration(500);
+            endAnim.setDuration(500);
+            startAnim.addUpdateListener(this);
+            endAnim.addUpdateListener(this);
+            startAnim.addListener(this);
+            endAnim.addListener(this);
+        }
+        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            float factor = (float)valueAnimator.getAnimatedValue();
+        }
+        public void onAnimationEnd(Animator animator) {
+            if(isAnimating) {
+                dir = dir == 0 ? 1 : 0;
+                if(dir == 1) {
+
+                }
+                else if(dir == 0) {
+
+                }
+                isAnimating = false;
+            }
+        }
+        public void start() {
+            if(!isAnimating) {
+                if(dir == 0) {
+
+                }
+                else {
+
+                }
+            }
         }
     }
 }
