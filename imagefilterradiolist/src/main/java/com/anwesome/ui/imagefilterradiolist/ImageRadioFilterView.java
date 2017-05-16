@@ -1,6 +1,7 @@
 package com.anwesome.ui.imagefilterradiolist;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,16 +16,20 @@ public class ImageRadioFilterView extends View{
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int w,h,time = 0;
     private Radio radio;
+    private Bitmap bitmap;
     private ImageColorFilter imageColorFilter = new ImageColorFilter();
-    public ImageRadioFilterView(Context context) {
+    public ImageRadioFilterView(Context context,Bitmap bitmap) {
         super(context);
+        this.bitmap = bitmap;
     }
     public void onDraw(Canvas canvas) {
         if(time == 0) {
             w = canvas.getWidth();
             h = canvas.getHeight();
             radio = new Radio();
+            bitmap = Bitmap.createScaledBitmap(bitmap,w,4*h/5,true);
         }
+        canvas.drawBitmap(bitmap,0,0,paint);
         imageColorFilter.draw(canvas);
         radio.draw(canvas);
         time++;
