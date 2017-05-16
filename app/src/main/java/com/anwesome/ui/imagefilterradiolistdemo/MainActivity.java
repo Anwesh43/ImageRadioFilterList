@@ -14,14 +14,20 @@ import com.anwesome.ui.imagefilterradiolist.OnSelectionChangeListener;
 
 public class MainActivity extends AppCompatActivity {
     private Bitmap bitmap;
+    private String bitmapKey = "IFRV_bitmap";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(bitmap == null) {
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.forest1);
+            if(savedInstanceState!=null && savedInstanceState.getParcelable(bitmapKey) != null) {
+                bitmap = savedInstanceState.getParcelable(bitmapKey);
+            }
+            else {
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.forest1);
+            }
         }
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ImageRadioFilterView imageRadioFilterView = new ImageRadioFilterView(this, bitmap);
         addContentView(imageRadioFilterView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,500));
         imageRadioFilterView.setOnSelectionChangeListener(new OnSelectionChangeListener() {
@@ -35,5 +41,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "UnSelected", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void onSaveInstanceState(Bundle bundle) {
+        if(bitmap != null) {
+            bundle.putParcelable(bitmapKey, bitmap);
+        }
     }
 }
