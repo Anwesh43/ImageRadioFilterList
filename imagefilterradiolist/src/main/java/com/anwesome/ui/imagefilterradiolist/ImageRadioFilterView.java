@@ -22,6 +22,10 @@ public class ImageRadioFilterView extends View{
     private Bitmap bitmap;
     private ImageColorFilter imageColorFilter = new ImageColorFilter();
     private AnimationHandler animationHandler = new AnimationHandler();
+    private OnSelectionChangeListener onSelectionChangeListener;
+    public void setOnSelectionChangeListener(OnSelectionChangeListener onSelectionChangeListener) {
+        this.onSelectionChangeListener = onSelectionChangeListener;
+    }
     public ImageRadioFilterView(Context context,Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
@@ -107,11 +111,12 @@ public class ImageRadioFilterView extends View{
         public void onAnimationEnd(Animator animator) {
             if(isAnimating) {
                 dir = dir == 0 ? 1 : 0;
-                if(dir == 1) {
-
-                }
-                else if(dir == 0) {
-
+                if(onSelectionChangeListener != null) {
+                    if (dir == 1) {
+                        onSelectionChangeListener.onSelect();
+                    } else if (dir == 0) {
+                        onSelectionChangeListener.onUnSelect();
+                    }
                 }
                 isAnimating = false;
             }
@@ -119,10 +124,10 @@ public class ImageRadioFilterView extends View{
         public void start() {
             if(!isAnimating) {
                 if(dir == 0) {
-
+                    startAnim.start();
                 }
                 else {
-
+                    endAnim.start();
                 }
             }
         }
