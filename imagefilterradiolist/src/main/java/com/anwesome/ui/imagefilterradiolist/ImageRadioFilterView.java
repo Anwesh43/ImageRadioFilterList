@@ -35,7 +35,15 @@ public class ImageRadioFilterView extends View{
             w = canvas.getWidth();
             h = canvas.getHeight();
             radio = new Radio();
-            bitmap = Bitmap.createScaledBitmap(bitmap,w,4*h/5,true);
+            if(CacheContainer.getScaledBitmap(bitmap) != null) {
+                bitmap = CacheContainer.getScaledBitmap(bitmap);
+            }
+            else {
+                Bitmap newBitmap = Bitmap.createScaledBitmap(bitmap, w, 4 * h / 5, true);
+                CacheContainer.putScaledBitmap(bitmap,newBitmap);
+                bitmap = newBitmap;
+
+            }
         }
         canvas.drawBitmap(bitmap,0,0,paint);
         imageColorFilter.draw(canvas);
