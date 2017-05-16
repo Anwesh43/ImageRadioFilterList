@@ -129,6 +129,7 @@ public class ImageRadioFilterView extends View{
                 else {
                     endAnim.start();
                 }
+                isAnimating = true;
             }
         }
     }
