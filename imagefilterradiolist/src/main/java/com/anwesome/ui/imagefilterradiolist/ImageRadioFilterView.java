@@ -21,6 +21,7 @@ public class ImageRadioFilterView extends View{
     private Radio radio;
     private Bitmap bitmap;
     private ImageColorFilter imageColorFilter = new ImageColorFilter();
+    private AnimationHandler animationHandler = new AnimationHandler();
     public ImageRadioFilterView(Context context,Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
@@ -45,7 +46,7 @@ public class ImageRadioFilterView extends View{
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             if(radio.handleTap(event.getX(),event.getY())) {
-
+                animationHandler.start();
             }
         }
         return true;
