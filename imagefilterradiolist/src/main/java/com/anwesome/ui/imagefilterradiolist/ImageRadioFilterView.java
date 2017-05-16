@@ -2,6 +2,7 @@ package com.anwesome.ui.imagefilterradiolist;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.View;
 public class ImageRadioFilterView extends View{
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int w,h,time = 0;
+    private Radio radio;
     public ImageRadioFilterView(Context context) {
         super(context);
     }
@@ -20,12 +22,16 @@ public class ImageRadioFilterView extends View{
         if(time == 0) {
             w = canvas.getWidth();
             h = canvas.getHeight();
+            radio = new Radio();
         }
+        radio.draw(canvas);
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if(radio.handleTap(event.getX(),event.getY())) {
 
+            }
         }
         return true;
     }
@@ -38,6 +44,7 @@ public class ImageRadioFilterView extends View{
             r = h/10;
         }
         public void draw(Canvas canvas) {
+            paint.setColor(Color.parseColor("#1565C0"));
             canvas.save();
             canvas.translate(x,y);
             paint.setStyle(Paint.Style.STROKE);
