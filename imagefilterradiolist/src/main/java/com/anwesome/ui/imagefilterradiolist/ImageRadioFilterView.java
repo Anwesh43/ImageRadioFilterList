@@ -37,6 +37,11 @@ public class ImageRadioFilterView extends View{
         radio.draw(canvas);
         time++;
     }
+    public void update(float factor) {
+        radio.update(factor);
+        imageColorFilter.update(factor);
+        postInvalidate();
+    }
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             if(radio.handleTap(event.getX(),event.getY())) {
@@ -96,6 +101,7 @@ public class ImageRadioFilterView extends View{
         }
         public void onAnimationUpdate(ValueAnimator valueAnimator) {
             float factor = (float)valueAnimator.getAnimatedValue();
+            update(factor);
         }
         public void onAnimationEnd(Animator animator) {
             if(isAnimating) {
